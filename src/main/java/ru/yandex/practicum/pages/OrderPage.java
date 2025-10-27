@@ -6,8 +6,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.practicum.pages.util.EnvConfig;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Collection;
 
 public class OrderPage {
     private final WebDriver driver;
