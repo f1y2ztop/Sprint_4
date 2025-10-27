@@ -1,6 +1,5 @@
 package ru.yandex.practicum.pages;
 
-import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -25,6 +24,8 @@ public class OrderPage {
     private static final By addressField = By.cssSelector("input[placeholder='* Адрес: куда привезти заказ']");
     // Поле станции метро
     private static final By metroStationField = By.cssSelector("input[placeholder='* Станция метро']");
+    // Выбор станции метро в раскрывающемся списке
+    private static final By metroStationSelect = By.cssSelector(".select-search__row");
     // Поле телефон
     private static final By phoneNumberField = By.cssSelector("input[placeholder='* Телефон: на него позвонит курьер']");
     // Кнопка далее
@@ -34,13 +35,13 @@ public class OrderPage {
     // Поле срок аренды
     private static final By rentPeriodField = By.cssSelector(".Dropdown-placeholder");
     // Выпадающий список сутки
-    private static final By rentPeriodFirst = By.xpath(".//div[@class='Dropdown-menu']/div[text()='сутки']");
+    public static final By rentPeriodFirst = By.xpath(".//div[@class='Dropdown-menu']/div[text()='сутки']");
     // Выпадающий список трое суток
-    private static final By rentPeriodSecond = By.xpath(".//div[@class='Dropdown-menu']/div[text()='трое суток']");
+    public static final By rentPeriodSecond = By.xpath(".//div[@class='Dropdown-menu']/div[text()='трое суток']");
     // Чекбокс цвет черный жемчуг
-    private static final By blackPearlCheckBox = By.cssSelector("#black");
+    public static final By blackPearlCheckBox = By.cssSelector("#black");
     // Чекбокс цвет серая безысходность
-    private static final By greyHopeless = By.cssSelector("#grey");
+    public static final By greyHopeless = By.cssSelector("#grey");
     // Поле комментраий для курьера
     private static final By commentForCourier = By.cssSelector("input[placeholder='Комментарий для курьера']");
     // Кнопка заказа
@@ -48,18 +49,8 @@ public class OrderPage {
             ".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Заказать']");
     // Кнопка подтверждения заказа
     private static final By orderConfirmationButton = By.xpath(".//button[text()='Да']");
-    private static final By watchStatus = By.xpath(".//button[text()='Посмотреть статус']");
-
-    public static Collection<Object[]> getOrderTestData() {
-        return Arrays.asList(new Object[][]{
-                {MainPage.upperOrderButton, "Иван", "Подпивасов", "Москва, ул. Академика Янгеля д.14",
-                        "Улица Академика Янгеля", "+79777777777", "10.11.2025", rentPeriodFirst, blackPearlCheckBox,
-                        "Доставить после 12:00"},
-                {MainPage.lowerOrderButton, "Алексей", "Пивоваров", "Москва ул. Пушкина д.Колотушкина",
-                        "Пушкинская", "89153496329", "25.12.2025", rentPeriodSecond,
-                        greyHopeless, "Позвонить за пол часа"}
-        });
-    }
+    // Кнопка посмотреть статус
+    public static final By watchStatus = By.xpath(".//button[text()='Посмотреть статус']");
 
     public void fillNameField(String nameData) {
         driver.findElement(nameField).sendKeys(nameData);
@@ -75,7 +66,7 @@ public class OrderPage {
 
     public void fillMetroStation(String metroStationData) {
         driver.findElement(metroStationField).sendKeys(metroStationData);
-        driver.findElement(By.cssSelector(".select-search__row")).click();
+        driver.findElement(metroStationSelect).click();
     }
 
     public void fillPhoneNumberField(String phoneNumberData) {
@@ -118,10 +109,10 @@ public class OrderPage {
 
     }
 
-    public void orderCheck() {
+    public void waitForOrderDisplay() {
         new WebDriverWait(driver, Duration.ofSeconds(EnvConfig.TIMEOUT))
                 .until(ExpectedConditions.elementToBeClickable(watchStatus));
-        Assert.assertTrue(driver.findElement(watchStatus).isDisplayed());
+
     }
 }
 

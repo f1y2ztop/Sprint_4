@@ -1,5 +1,6 @@
 package ru.yandex.practicum.tests;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.yandex.practicum.pages.MainPage;
 import ru.yandex.practicum.pages.OrderPage;
+import ru.yandex.practicum.pages.util.DataForTesting;
 
 import java.util.Collection;
 
@@ -47,7 +49,7 @@ public class OrderTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> getOrder() {
-        return OrderPage.getOrderTestData();
+        return DataForTesting.getOrderTestData();
     }
 
     @Test
@@ -69,6 +71,7 @@ public class OrderTest {
         orderPage.fillCommentForCourier(commentForCourierData);
         orderPage.orderPageOrderButtonClick();
         orderPage.orderConfirmationButtonClick();
-        orderPage.orderCheck();
+        orderPage.waitForOrderDisplay();
+        Assert.assertTrue(driver.findElement(OrderPage.watchStatus).isDisplayed());
     }
 }

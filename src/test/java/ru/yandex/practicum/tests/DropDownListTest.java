@@ -1,11 +1,14 @@
 package ru.yandex.practicum.tests;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.yandex.practicum.pages.MainPage;
+import ru.yandex.practicum.pages.util.DataForTesting;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,7 +29,7 @@ public class DropDownListTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> getAccordion() {
-        return Arrays.asList(MainPage.accordionTestData);
+        return Arrays.asList(DataForTesting.accordionTestData);
     }
 
     @Test
@@ -36,6 +39,8 @@ public class DropDownListTest {
         mainPage.openMainPage();
         mainPage.clickOnAcceptButton();
         mainPage.accordionHeadingClick(accordionHeadingId);
-        mainPage.panelDisplayCheck(accordionPanelId);
+        mainPage.waitForPanelDisplay(accordionPanelId);
+        Assert.assertTrue("Элемент с Id:" + accordionPanelId + " не отобразился.",
+                driver.findElement(By.cssSelector(accordionPanelId)).isDisplayed());
     }
 }
