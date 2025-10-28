@@ -22,9 +22,12 @@ public class MainPage {
     public static final By upperOrderButton = By.cssSelector(".Button_Button__ra12g"); // Верхняя кнопка заказать
     public static final By lowerOrderButton = By.cssSelector(".Button_Button__ra12g.Button_UltraBig__UU3Lp"); // Нижняя кнопка заказать
 
+    public void ScrollToAccordion(WebElement accordionHeading) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", accordionHeading);
+    }
     public void accordionHeadingClick(String accordionHeadingId) {
         WebElement accordionHeading = driver.findElement(By.cssSelector(accordionHeadingId));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", accordionHeading);
+        ScrollToAccordion(accordionHeading);
         new WebDriverWait(driver, Duration.ofSeconds(EnvConfig.TIMEOUT))
                 .until(ExpectedConditions.elementToBeClickable(accordionHeading)).click();
     }

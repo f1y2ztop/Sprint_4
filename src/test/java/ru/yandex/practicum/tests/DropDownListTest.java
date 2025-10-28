@@ -40,7 +40,7 @@ public class DropDownListTest {
         mainPage.clickOnAcceptButton();
         mainPage.accordionHeadingClick(accordionHeadingId);
         mainPage.waitForPanelDisplay(accordionPanelId);
-        Assert.assertTrue("Элемент с Id:" + accordionPanelId + " не отобразился.",
+        Assert.assertTrue(String.format("Элемент с Id: %s не отобразился.", accordionPanelId),
                 driver.findElement(By.cssSelector(accordionPanelId)).isDisplayed());
     }
 }
